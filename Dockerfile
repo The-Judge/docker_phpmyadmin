@@ -3,21 +3,21 @@ MAINTAINER Marc Richter <mr@in-telegence.net>
 
 # Install base packages
 ENV DEBIAN_FRONTEND noninteractive
-RUN apt-get update && \
-	apt-get dist-upgrade -y \
-    apt-get -yq install \
+RUN apt-get update \
+    && apt-get dist-upgrade -y \
+    && apt-get -yq install \
         curl \
-	procps \
-	php5-mcrypt \
-	php5-fpm \
+	    procps \
+	    php5-mcrypt \
+	    php5-fpm \
         php5-mysql \
         php5-gd \
         php5-curl \
         php-pear \
         php-apc \
-	unzip \
-	vim && \
-	rm -rf /var/lib/apt/lists/*
+	    unzip \
+	    vim \
+	&& rm -rf /var/cache/apt /var/lib/apt/lists
 
 # Configure php-fpm
 RUN sed -i 's/^;\(error_log.*$\)/\1/g' /etc/php5/fpm/php-fpm.conf && \
