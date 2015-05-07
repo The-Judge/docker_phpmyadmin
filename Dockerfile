@@ -4,6 +4,7 @@ MAINTAINER Marc Richter <mr@in-telegence.net>
 # Install base packages
 ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update && \
+	apt-get dist-upgrade -y \
     apt-get -yq install \
         curl \
 	procps \
