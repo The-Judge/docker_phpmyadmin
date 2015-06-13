@@ -39,6 +39,7 @@ RUN php5enmod mcrypt
 
 # Download and extract PHPMyAdmin
 RUN set -x \
+    && mkdir -p /usr/share/nginx/html \
     && curl -Ls "https://phpmyadmin-downloads-532693.c.cdn77.org/phpMyAdmin/4.4.9/phpMyAdmin-4.4.9-all-languages.tar.bz2" \
     | tar -xj --directory /usr/share/nginx/html --strip-components=1 \
     && chown nginx -R /usr/share/nginx/html
