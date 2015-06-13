@@ -6,6 +6,7 @@ ENV DEBIAN_FRONTEND noninteractive
 RUN apt-get update \
     && apt-get dist-upgrade -y \
     && apt-get -yq install \
+        bzip2 \
         curl \
 	    procps \
 	    php5-mcrypt \
