@@ -51,9 +51,9 @@ ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 
 # Generate random Blowfish-secret
-RUN BFRAND="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" \
-    #cat /config.inc.php | sed "s#BFSECRET#${BFRAND}#g" > /usr/share/nginx/html/config.inc.php
-    cat /config.inc.php | sed "s#BFSECRET#$BFRAND#g" > /usr/share/nginx/html/config.inc.php
+RUN export BFRAND="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" \
+    && cat /config.inc.php | sed "s#BFSECRET#${BFRAND}#g" > /usr/share/nginx/html/config.inc.php \
+    && unset BFRAND
 
 # Expose ports and define startup command
 EXPOSE 80
