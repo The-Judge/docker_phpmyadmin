@@ -37,12 +37,21 @@ RUN sed -i 's/^listen.owner =.*$/listen.owner = nginx/g' /etc/php5/fpm/pool.d/ww
 # Enable mcrypt PHP module
 RUN php5enmod mcrypt
 
+# Download and extract PHPMyAdmin
+RUN set -x \
+    && curl -Ls "https://phpmyadmin-downloads-532693.c.cdn77.org/phpMyAdmin/4.4.9/phpMyAdmin-4.4.9-all-languages.tar.bz2" \
+    | tar -xj --directory /usr/share/nginx/html --strip-components=1 \
+    && chown nginx -R /usr/share/nginx/html
+
 # Add startup script to image
 ADD config.inc.php /config.inc.php
 ADD run.sh /run.sh
 RUN chmod 755 /*.sh
 
+# Generate random Blowfish-secret
+RUN BFRAND="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)" \
+    cat /config.inc.php | sed "s#BFSECRET#${BFRAND}#g" > /usr/share/nginx/html/config.inc.php
+
 # Expose ports and define startup command
 EXPOSE 80
 CMD ["/run.sh"]
-
