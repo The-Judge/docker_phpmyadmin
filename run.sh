@@ -9,7 +9,8 @@ export BFRAND="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
 
 # Set PmaAbsoluteUri if Env var PMAABSOLUTEURI is set
 if [ ! -z "${PMAABSOLUTEURI}" ]; then
-    sed -i'' "s#^;\(.*PmaAbsoluteUri.*=\).*\$#\1 \'${PMAABSOLUTEURI}\';#g" ${PMACONFIG}
+    sed -i'' "s#\(.*PmaAbsoluteUri.*=\).*\$#\1 \'${PMAABSOLUTEURI}\';#g" ${PMACONFIG}
+    sed -i'' "s#^;##g" ${PMACONFIG}
 else
     sed -i'' 's#^\(\$.*PmaAbsoluteUri.*$\)#;\1#g' ${PMACONFIG}
 fi
