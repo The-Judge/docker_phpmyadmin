@@ -57,4 +57,6 @@ RUN export BFRAND="$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -
 
 # Expose ports and define startup command
 EXPOSE 80
+
+USER nginx
 CMD ["/run.sh"]
